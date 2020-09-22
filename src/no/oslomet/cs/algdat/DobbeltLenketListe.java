@@ -43,7 +43,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     private int endringer;         // antall endringer i listen
 
     public DobbeltLenketListe() {
-        throw new UnsupportedOperationException();
+        //throw new UnsupportedOperationException();
     }
 
     public DobbeltLenketListe(T[] a) {
@@ -182,6 +182,21 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     public Iterator<T> iterator(int indeks) {
         throw new UnsupportedOperationException();
+    }
+
+    private Node<T> finnNode(int indeks){
+
+        Node<T> node;
+        if(antall / 2  >= indeks){
+            node = hode;
+            for(int i = 0; i < indeks; i++) node = node.neste;
+        }
+        else {
+            node = hale;
+            for(int i = indeks; i > 0; i--) node = node.forrige;
+        }
+        return node;
+
     }
 
     private class DobbeltLenketListeIterator implements Iterator<T>
