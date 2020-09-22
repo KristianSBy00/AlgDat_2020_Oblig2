@@ -53,17 +53,24 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
         antall = a.length;
 
-        hode = new Node<T>(a[0],null,null);
-        Node<T> p =  hode;
-
-        for(int i = 1; i < a.length; i++){
-            if (a[i] != null){
-                hale = new Node<T>(a[i],p,null);
-                p.neste = hale;
-                p = hale;
+        for(int i = 0; i < a.length; i++){
+            if(a[i] != null){
+                hode = hale = new Node<T>(a[i],null,null);
+                Node<T> p =  hode;
+                i++;
+                for(; i < a.length; i++){
+                    if (a[i] != null){
+                        hale = new Node<T>(a[i],p,null);
+                        p.neste = hale;
+                        p = hale;
+                    }
+                    else antall--;
+                }
+                break;
             }
-            else antall--;
+            antall--;
         }
+
 
     }
 
@@ -146,7 +153,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         if (antall == 0) return "[]";
 
         StringBuilder ut = new StringBuilder("[" + hale.verdi);
-        Node<T> p = hale.neste;
+        Node<T> p = hale.forrige;
 
         while (p != null){
             ut.append(", ").append(p.verdi);
