@@ -4,13 +4,8 @@ package no.oslomet.cs.algdat;
 ////////////////// class DobbeltLenketListe //////////////////////////////
 
 
-import java.util.Comparator;
-import java.util.ConcurrentModificationException;
-import java.util.NoSuchElementException;
-import java.util.StringJoiner;
+import java.util.*;
 
-import java.util.Iterator;
-import java.util.Objects;
 import java.util.function.Predicate;
 
 
@@ -75,8 +70,42 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
     public Liste<T> subliste(int fra, int til){
-        throw new UnsupportedOperationException();
+        fratilKontroll(fra,til);
+
+        Liste<T> ut = new DobbeltLenketListe<>();
+
+        Node<T> node = hode;
+
+        int i = 0;
+
+        for(; i < fra; i++){
+            node = node.neste;
+        }
+
+        for(; i<til; i++){
+            ut.leggInn(node.verdi);
+            node = node.neste;
+        }
+        return ut;
+
     }
+
+    private void fratilKontroll(int fra, int til)
+    {
+        if (fra < 0)                                  // fra er negativ
+            throw new IndexOutOfBoundsException
+                    ("fra(" + fra + ") er negativ!");
+
+        if (til > antall)                          // til er utenfor tabellen
+            throw new IndexOutOfBoundsException
+                    ("til(" + til + ") > antall(" + antall + ")");
+
+        if (fra > til)                                // fra er større enn til
+            throw new IllegalArgumentException
+                    ("fra(" + fra + ") > til(" + til + ") - illegalt intervall!");
+    }
+
+
 
     @Override
     public int antall() {
@@ -127,6 +156,9 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public T oppdater(int indeks, T nyverdi) {
+
+        Objects.requireNonNull(nyverdi, "nyverdi er null!");
+
         indeksKontroll(indeks,false);
         Node<T> node = finnNode(indeks);
         T ut = node.verdi;
