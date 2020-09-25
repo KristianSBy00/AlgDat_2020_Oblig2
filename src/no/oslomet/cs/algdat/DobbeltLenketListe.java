@@ -65,8 +65,6 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             }
             antall--;
         }
-
-
     }
 
     public Liste<T> subliste(int fra, int til){
@@ -105,7 +103,19 @@ public class DobbeltLenketListe<T> implements Liste<T> {
                     ("fra(" + fra + ") > til(" + til + ") - illegalt intervall!");
     }
 
+    private Node<T> finnNode(int indeks){
 
+        Node<T> node;
+        if(antall / 2 >= indeks){
+            node = hode;
+            for(int i = 0; i < indeks; i++) node = node.neste;
+        }
+        else {
+            node = hale;
+            for(int i = antall-indeks-1; i > 0; i--) node = node.forrige;
+        }
+        return node;
+    }
 
     @Override
     public int antall() {
@@ -139,19 +149,16 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         indeksKontroll(indeks,true);
         Node<T> node;
 
-        if(antall == 0){
-            hode = hale = new Node<>(verdi,null,null);
-        }
+        if(antall == 0) hode = hale = new Node<>(verdi,null,null);
         else if(indeks == 0){
             node = hode;
             hode = new Node<>(verdi,null,node);
             node.forrige = hode;
-
         }
         else if(indeks == antall){
             node = hale;
             hale = new Node<>(verdi,node,null);
-            node.neste = hale;;
+            node.neste = hale;
         }
         else {
             node = finnNode(indeks);
@@ -209,7 +216,33 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public T fjern(int indeks) {
-        throw new UnsupportedOperationException();
+        indeksKontroll(indeks,false);
+        T ut;
+
+        if(antall == 1){
+            ut = hode.verdi;
+            hode = hale = null;
+        }
+        else if(indeks == 0){
+            ut = hode.verdi;
+            hode = hode.neste;
+            hode.forrige = null;
+        }
+        else if(indeks == antall-1){
+            ut = hale.verdi;
+            hale = hale.forrige;
+            hale.neste = null;
+        }
+        else {
+            Node<T> p = finnNode(indeks - 1);  // p er noden foran den som skal fjernes
+            Node<T> q = p.neste;
+            ut = q.verdi;
+            p.neste = q.neste;
+            q.neste.forrige = p;
+        }
+        antall--;
+        endringer++;
+        return ut;
     }
 
     @Override
@@ -255,20 +288,6 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     public Iterator<T> iterator(int indeks) {
         throw new UnsupportedOperationException();
-    }
-
-    private Node<T> finnNode(int indeks){
-
-        Node<T> node;
-        if(antall / 2 >= indeks){
-            node = hode;
-            for(int i = 0; i < indeks; i++) node = node.neste;
-        }
-        else {
-            node = hale;
-            for(int i = antall-indeks-1; i > 0; i--) node = node.forrige;
-        }
-        return node;
     }
 
     private class DobbeltLenketListeIterator implements Iterator<T>
