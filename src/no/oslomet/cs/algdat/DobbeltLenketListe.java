@@ -205,6 +205,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         Node<T> node = finnNode(indeks);
         T ut = node.verdi;
         node.verdi = nyverdi;
+        endringer++;
+
         return ut;
 
     }
