@@ -917,6 +917,7 @@ class DobbeltLenketListeTest {
         long min = Math.min(tid1, tid2);
 
         if (maks > 1.5 * min) {
+            System.out.println(maks + ", " + min);
             System.out.println("Oppgave 6zg: Ineffektiv kode! Har du kodet den ene fjern-metoden");
             System.out.println("ved hjelp av den andre? Eller så er en av fjern-metodene dine litt treg.");
             antallFeil++;

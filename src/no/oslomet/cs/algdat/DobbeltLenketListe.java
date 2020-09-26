@@ -213,38 +213,70 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public boolean fjern(T verdi) {
-        int indeks = indeksTil(verdi);
-        if(indeks == -1) return false;
-        fjern(indeks);
+        if(verdi == null) return false;
+        Node<T> node = hode;
+
+        while (node != null){
+            if(node.verdi.equals(verdi)) break;
+            node = node.neste;
+        }
+
+        if(node == null) return false;
+
+        else if(node == hode){
+            if(antall == 1) hode = hale = null;
+            else {
+                hode = hode.neste;
+                hode.forrige = null;
+            }
+        }
+        else if(node == hale){
+            hale = hale.forrige;
+            hale.neste = null;
+        }
+        else{
+            Node<T> Vnode = node.forrige,
+                    Hnode = node.neste;
+            Vnode.neste = Hnode;
+            Hnode.forrige = Vnode;
+        }
+
+        node = null;
+
+        endringer++;
+        antall--;
         return true;
     }
+
 
     @Override
     public T fjern(int indeks) {
         indeksKontroll(indeks,false);
-        T ut;
+        Node<T> node;
 
-        if(antall == 1){
-            ut = hode.verdi;
-            hode = hale = null;
-        }
-        else if(indeks == 0){
-            ut = hode.verdi;
-            hode = hode.neste;
-            hode.forrige = null;
+        if(indeks == 0){
+            node = hode;
+            if(antall == 1) hode = hale = null;
+            else {
+                hode = hode.neste;
+                hode.forrige = null;
+            }
         }
         else if(indeks == antall-1){
-            ut = hale.verdi;
+            node = hale;
             hale = hale.forrige;
             hale.neste = null;
         }
         else {
-            Node<T> p = finnNode(indeks - 1);  // p er noden foran den som skal fjernes
-            Node<T> q = p.neste;
-            ut = q.verdi;
-            p.neste = q.neste;
-            q.neste.forrige = p;
+            node  = finnNode(indeks);
+            Node<T> Vnode = node.forrige,
+                    Hnode= node.neste;
+            Vnode.neste = Hnode;
+            Hnode.forrige = Vnode;
         }
+        T ut = node.verdi;
+        node = null;
+
         antall--;
         endringer++;
         return ut;
