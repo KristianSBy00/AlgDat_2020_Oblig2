@@ -198,7 +198,6 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public T oppdater(int indeks, T nyverdi) {
-
         Objects.requireNonNull(nyverdi, "nyverdi er null!");
 
         indeksKontroll(indeks,false);
@@ -214,7 +213,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     @Override
     public boolean fjern(T verdi) {
         if(verdi == null) return false;
-        Node<T> node = hode;
+        Node<T> node = hode, Vnode, Hnode;
 
         while (node != null){
             if(node.verdi.equals(verdi)) break;
@@ -223,7 +222,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
         if(node == null) return false;
 
-        else if(node == hode){
+        if(node == hode){
             if(antall == 1) hode = hale = null;
             else {
                 hode = hode.neste;
@@ -235,14 +234,11 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             hale.neste = null;
         }
         else{
-            Node<T> Vnode = node.forrige,
-                    Hnode = node.neste;
+            Vnode = node.forrige;
+            Hnode = node.neste;
             Vnode.neste = Hnode;
             Hnode.forrige = Vnode;
         }
-
-        node = null;
-
         endringer++;
         antall--;
         return true;
@@ -252,10 +248,11 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     @Override
     public T fjern(int indeks) {
         indeksKontroll(indeks,false);
-        Node<T> node;
+
+        T ut;
 
         if(indeks == 0){
-            node = hode;
+            ut = hode.verdi;
             if(antall == 1) hode = hale = null;
             else {
                 hode = hode.neste;
@@ -263,29 +260,27 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             }
         }
         else if(indeks == antall-1){
-            node = hale;
+            ut = hale.verdi;
             hale = hale.forrige;
             hale.neste = null;
         }
         else {
-            node  = finnNode(indeks);
-            Node<T> Vnode = node.forrige,
-                    Hnode= node.neste;
-            Vnode.neste = Hnode;
-            Hnode.forrige = Vnode;
+            Node<T> p = finnNode(indeks-1),
+                    q = p.neste,
+                    r = q.neste;
+            ut = q.verdi;
+            p.neste = r;
+            r.forrige = p;
         }
-        T ut = node.verdi;
-        node = null;
-
-        antall--;
         endringer++;
+        antall--;
         return ut;
     }
 
     @Override
     public void nullstill() {
         antall = 0;
-        endringer = 0;
+        endringer++;
         hode = hale = null;
     }
 
