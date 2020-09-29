@@ -47,6 +47,11 @@ Se oblig-tekst for alle krav. Oppgaver som ikke oppfyller følgende vil ikke få
  node og verdi returnert. Løste b ved å returnere en ny DobbeltLenketListeIterator(). Løste c ved å sette denne like
  noden på indeksen ved bruk av finnNode(int indesk). Løste d ved å utføre en indeks kontroll å så returnere en ny 
  DobbeltLenketListeIterator(int indeks) med indeksen som indeks.
+ 
+* Oppgave7?: Etter som testen for oppgave 8 kaller på nullstill() metoden har den fat en simpel implementering. 
+ metoden tar kun ok nullstiller hode og halle, setter antall lik 0 og øker antall endringer med 1.
+
+
 
 
 
