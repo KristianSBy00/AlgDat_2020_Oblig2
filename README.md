@@ -13,7 +13,7 @@ Se oblig-tekst for alle krav. Oppgaver som ikke oppfyller følgende vil ikke få
 * Alle testene som kreves fungerer (også spesialtilfeller)
 * Readme-filen her er fyllt ut som beskrevet
 
-# Beskrivelse av oppgaveløsning (maks 5 linjer per oppgave)
+# Beskrivelse av oppgaveløsning
 
 * Oppgave 1: Løste ved å lupe gjenom alle objekter i innparameter og opprette noder med disse objectene som verdi i
  tilsvarende rekkefølge.
@@ -50,6 +50,24 @@ Se oblig-tekst for alle krav. Oppgaver som ikke oppfyller følgende vil ikke få
  
 * Oppgave7?: Etter som testen for oppgave 8 kaller på nullstill() metoden har den fat en simpel implementering. 
  metoden tar kun ok nullstiller hode og halle, setter antall lik 0 og øker antall endringer med 1.
+ 
+# Feil ved test kjøring
+ 
+* Oppgave 6zg: Ineffektiv kode! Har du kodet den ene fjern-metoden
+ ved hjelp av den andre? Eller så er en av fjern-metodene dine litt treg.
+   
+# Kommenterer til feil
+ 
+* Oppgave 6zg: Jeg har prøvd etter beste evne til å optimalisere public boolean fjern(T verdi) og
+ public T fjern(int indeks) metodene slik at de bruker omtrent samme tid, men ikke med mye hell. Jeg har konkludert med
+ at T fjern(int indeks) er fundamentalt raskere etter som den gir bedre informasjon om hvor noden som skal fjernes
+ befinner seg enn om man bare for oppgitt en verdi. Når man fjerner etter indeks kan man for eksempel bruke
+ finnNode(int indeks) som er mer effektiv enn om man må gå gjennom alle nodene fra starten. Foreksempell når det er hale
+ som skal fjernes
+
+ 
+   
+
 
 
 
