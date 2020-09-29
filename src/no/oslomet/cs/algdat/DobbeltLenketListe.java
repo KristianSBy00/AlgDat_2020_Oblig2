@@ -1,3 +1,5 @@
+//Kristian By, s344058, s344058@oslomet.no
+
 package no.oslomet.cs.algdat;
 
 
