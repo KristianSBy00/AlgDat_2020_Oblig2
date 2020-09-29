@@ -72,15 +72,9 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
         Liste<T> ut = new DobbeltLenketListe<>();
 
-        Node<T> node = hode;
+        Node<T> node = finnNode(fra);
 
-        int i = 0;
-
-        for(; i < fra; i++){
-            node = node.neste;
-        }
-
-        for(; i<til; i++){
+        for(int i = fra; i<til; i++){
             ut.leggInn(node.verdi);
             node = node.neste;
         }
