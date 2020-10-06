@@ -158,8 +158,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         }
         else {
             node = finnNode(indeks);
-            Node<T> ny = new Node<T>(verdi,node.forrige,node);
-            node.forrige.neste = ny;
+            Node<T> forrige = node.forrige, ny = new Node<T>(verdi,forrige,node);
+            forrige.neste = ny;
             node.forrige = ny;
         }
         antall++;
